@@ -1,0 +1,7 @@
+{
+    "private": true,
+    "dependencies": {
+        "git-commit-msg-linter": "^3.0.0",
+        "husky": "^5.1.1"
+    }
+}
