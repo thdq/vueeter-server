@@ -47,4 +47,24 @@ describe('SignUp Controller', () => {
 
     })
 
+    test('Should return 400 if no birth date is provided', () => {
+
+        const sut = makeSut()
+
+        const httpRequest = {
+            body: {
+                username: '_any_username',
+                email: '_any@email',
+                name: '_any_name',
+                password: '_any_password',
+                passwordConfirm: '_any_passwordConfirm'
+            }
+        }
+
+        const httpResponse = sut.handle(httpRequest)
+        expect(httpResponse.statusCode).toBe(400)
+        expect(httpResponse.body).toEqual(new MissingParamsError('birth_date'))
+
+    })
+
 })
