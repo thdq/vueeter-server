@@ -1,12 +1,21 @@
 {
-    "extends": "standard-with-typescript",
+    "extends": [
+        "standard-with-typescript",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"        
+    ],
     "parserOptions": {
         "project": "./tsconfig.json"
     },
+    "ignorePatterns": ["jest.config.js"],
     "rules": {
         "@typescript-eslint/indent": ["error", 4],
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/quotes": "off",
-        "@typescript-eslint/camelcase": "off"
+        "@typescript-eslint/camelcase": "off",
+        "padded-blocks": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [2, { "args": "none" }]       
     }
 }
