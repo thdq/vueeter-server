@@ -222,6 +222,28 @@ describe('SignUp Controller', () => {
         expect(httpResponse.body).toEqual(new ServerError())
     })
 
+    test('Should return 500 if addUser throws', () => {
+
+        const { sut, addUserStub } = makeSut()
+
+        jest.spyOn(addUserStub, 'add').mockImplementationOnce(() => { throw new Error() })
+
+        const httpRequest = {
+            body: {
+                username: '_any_username',
+                birth_date: '2021-02-28',
+                email: '_any@email',
+                name: '_any_name',
+                password: '_any_password',
+                passwordConfirm: '_any_password'
+            }
+        }
+
+        const httpResponse = sut.handle(httpRequest)
+        expect(httpResponse.statusCode).toBe(500)
+        expect(httpResponse.body).toEqual(new ServerError())
+    })
+
     test('Should call addUser with correct values', () => {
 
         const { sut, addUserStub } = makeSut()
