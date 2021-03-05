@@ -5,7 +5,10 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "jest --passWithNoTests",
-		"test:staged": "jest --passWithNoTests"
+		"test:unit": "jest --passWithNoTests -c jest.unit.config.js",
+		"test:integration": "jest --passWithNoTests -c jest.integration.config.js",
+		"test:staged": "jest --passWithNoTests --findRelatedTests",
+		"test:ci": "jest --passWithNoTests --coverage --runInBand"
 	},
 	"author": "Thiago Oliveira",
 	"license": "ISC",
