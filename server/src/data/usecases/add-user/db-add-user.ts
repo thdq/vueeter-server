@@ -1,6 +1,4 @@
-import { Encrypter } from "@/data/protocols/encrypter"
-import { UserModel } from "@/domain/models/user"
-import { AddUserModel, AddUser } from "@/domain/usecases/add-user"
+import { Encrypter, UserModel, AddUserModel, AddUser } from "./db-add-user.protocol"
 
 export class DbAddUser implements AddUser {
     private readonly encrypter: Encrypter
