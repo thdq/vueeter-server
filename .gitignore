@@ -5,3 +5,4 @@ client/dist
 yarn*
 package-*
 coverage
+.vscode
