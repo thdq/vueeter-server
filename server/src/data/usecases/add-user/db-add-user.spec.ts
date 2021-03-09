@@ -1,9 +1,31 @@
-import { Encrypter } from "./db-add-user.protocol"
+import { Encrypter, AddUserModel, UserModel, AddUserRepository } from "./db-add-user.protocol"
 import { DbAddUser } from "./db-add-user"
 
 interface SutTypes {
     sut: DbAddUser
     encrypterStub: Encrypter
+    addUserRepositoryStub: AddUserRepository
+}
+
+const makeAddUserRepository = (): AddUserRepository => {
+    
+    class AddUserRepositoryStub implements AddUserRepository {
+        async add (user: AddUserModel): Promise<UserModel> {
+            
+            const fakeUser = {
+                id: '_valid_id',
+                username: '_any_username',
+                email: '_any@email',
+                birth_date: new Date(),
+                name: '_any_name',
+                password: '_any_password'                
+            }
+            
+            return new Promise(resolve => resolve(fakeUser))
+        }
+    }
+    
+    return new AddUserRepositoryStub()
 }
 
 const makeEncrypterStub = (): Encrypter => {
@@ -21,11 +43,13 @@ const makeEncrypterStub = (): Encrypter => {
 const makeSut = (): SutTypes => {
     
     const encrypterStub = makeEncrypterStub()
-    const sut = new DbAddUser(encrypterStub)
+    const addUserRepositoryStub = makeAddUserRepository()
+    const sut = new DbAddUser(encrypterStub, addUserRepositoryStub)
     
     return {
         sut,
-        encrypterStub
+        encrypterStub,
+        addUserRepositoryStub
     }
 
 }
@@ -70,6 +94,32 @@ describe('DbAddUser Usecase', () => {
 
         await expect(promisseAdd).rejects.toThrow()
 
-    })    
+    })
+    
+    test('Should call AddUserRepository with corret values', async () => {
+        
+        const { sut, addUserRepositoryStub } = makeSut()
+        
+        const addSpy = jest.spyOn(addUserRepositoryStub, 'add')
+        
+        const userData = {
+            username: '_any_username',
+            email: '_any@email',
+            birth_date: '2021-02-28',
+            name: '_any_name',
+            password: 'hashed_password'            
+        }
+        
+        await sut.add(userData)
+        
+        expect(addSpy).toHaveBeenCalledWith({
+            username: '_any_username',
+            email: '_any@email',
+            birth_date: '2021-02-28',
+            name: '_any_name',
+            password: 'hashed_password'                
+        })
+        
+    })
 
 })
