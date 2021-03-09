@@ -2,7 +2,7 @@ import { UserModel } from "../models/user"
 
 export interface AddUserModel {
     username: string
-    birth_date: Date
+    birth_date: Date | string
     email: string
     name: string
     password: string
