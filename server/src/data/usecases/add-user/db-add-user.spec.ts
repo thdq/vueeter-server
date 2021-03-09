@@ -51,5 +51,25 @@ describe('DbAddUser Usecase', () => {
         expect(encryptSpy).toHaveBeenCalledWith("_any_password")
 
     })
+    
+    test('Should throw if Encryper throws', async () => {
+
+        const { sut, encrypterStub } = makeSut()
+
+        jest.spyOn(encrypterStub, 'encrypt').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+
+        const userData = {
+            username: '_any_username',
+            email: '_any@email',
+            birth_date: '2021-02-28',
+            name: '_any_name',
+            password: '_any_password'
+        }
+
+        const promisseAdd = sut.add(userData)
+
+        await expect(promisseAdd).rejects.toThrow()
+
+    })    
 
 })
