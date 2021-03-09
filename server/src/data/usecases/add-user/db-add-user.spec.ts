@@ -16,9 +16,9 @@ const makeAddUserRepository = (): AddUserRepository => {
                 id: '_valid_id',
                 username: '_any_username',
                 email: '_any@email',
-                birth_date: new Date(),
+                birth_date: new Date('2021-02-28'),
                 name: '_any_name',
-                password: '_any_password'                
+                password: 'hashed_password'                
             }
             
             return new Promise(resolve => resolve(fakeUser))
@@ -139,6 +139,31 @@ describe('DbAddUser Usecase', () => {
         const promise = sut.add(userData)
         
         await expect(promise).rejects.toThrow()
+        
+    })
+    
+    test('Should return a user on success', async () => {
+        
+        const { sut } = makeSut()
+        
+        const userData = {
+            username: '_any_username',
+            email: '_any@email',
+            birth_date: new Date('2021-02-28'),
+            name: '_any_name',
+            password: '_any_password'               
+        }
+        
+        const newUser = await sut.add(userData)
+        
+        expect(newUser).toEqual({
+            id: '_valid_id',
+            username: '_any_username',
+            email: '_any@email',
+            birth_date: new Date('2021-02-28'),
+            name: '_any_name',
+            password: 'hashed_password'            
+        })
         
     })
 
