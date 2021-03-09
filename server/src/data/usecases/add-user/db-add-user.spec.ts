@@ -56,7 +56,7 @@ const makeSut = (): SutTypes => {
 
 describe('DbAddUser Usecase', () => {
 
-    test('Should call Encryper with corret password', async () => {
+    test('Should call Encrypter with corret password', async () => {
 
         const { sut, encrypterStub } = makeSut()
 
@@ -76,7 +76,7 @@ describe('DbAddUser Usecase', () => {
 
     })
     
-    test('Should throw if Encryper throws', async () => {
+    test('Should throw if Encrypter throws', async () => {
 
         const { sut, encrypterStub } = makeSut()
 
@@ -119,6 +119,26 @@ describe('DbAddUser Usecase', () => {
             name: '_any_name',
             password: 'hashed_password'                
         })
+        
+    })
+    
+    test('Should throw if AddUserRepository throws', async () => {
+        
+        const { sut, addUserRepositoryStub } = makeSut()
+        
+        jest.spyOn(addUserRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+        
+        const userData = {
+            username: '_any_username',
+            email: '_any@email',
+            birth_date: '2021-02-28',
+            name: '_any_name',
+            password: '_any_password'             
+        }
+        
+        const promise = sut.add(userData)
+        
+        await expect(promise).rejects.toThrow()
         
     })
 
