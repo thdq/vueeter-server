@@ -6,3 +6,4 @@ yarn*
 package-*
 coverage
 .vscode
+.env
