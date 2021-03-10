@@ -1,6 +1,12 @@
 import bcrypt from 'bcrypt'
 import { BcryptAdapter } from './bcrypt-adapter'
 
+jest.mock('bcrypt', () => ({
+    async hash (): Promise<string> {
+        return new Promise(resolve => resolve('hashed_value'))
+    }
+}))
+
 interface SutTypes {
     sut: BcryptAdapter
     SALT: number
@@ -30,6 +36,16 @@ describe('Bcrypt Adapter', () => {
         await sut.encrypt('_any_value')
         
         expect(hashSpy).toHaveBeenCalledWith('_any_value', SALT)
+        
+    })
+    
+    test('Should return a hash on success', async () => {
+        
+        const { sut } = makeSut()
+        
+        const hash = await sut.encrypt('_any_value')
+        
+        expect(hash).toBe('hashed_value')
         
     })
     
