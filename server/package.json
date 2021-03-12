@@ -36,5 +36,8 @@
 		"@prisma/client": "^2.18.0",
 		"bcrypt": "^5.0.1",
 		"validator": "^13.5.2"
+	},
+	"engines": {
+		"node": "12.x"
 	}
 }
