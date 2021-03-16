@@ -12,7 +12,7 @@ describe('SignUp Routes', () => {
         
         await request(app).post('/api/signup').send({
             username: 'thdqo',
-            birth_date: '1999-02-19',
+            birth_date: new Date('1999-02-19'),
             email: '_any_mail@email.com',
             name: 'Thiago Oliveira',
             password: '_any_password',
