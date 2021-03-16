@@ -6,11 +6,9 @@ export default (app: Express): void => {
     const router = Router()
     app.use('/api', router)
     
-    fg.sync('**/src/main/routes/**.ts').map(async file => {
+    fg.sync('**/src/main/routes/**route.ts').map(async file => {
         
-        const router = (await import(`../../../${file}`)).default
-        
-        router(router)
+        (await import(`../../../${file}`)).default(router)
         
     })
 }
