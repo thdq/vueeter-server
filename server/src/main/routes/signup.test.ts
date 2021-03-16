@@ -1,7 +1,12 @@
 import request from 'supertest'
 import app from '../config/app'
+import { prisma } from '../../infra/database/postgresql/helpers/prisma-helper'
 
 describe('SignUp Routes', () => {
+    
+    afterAll(async () => {
+        await prisma.$disconnect()
+    })    
     
     test('Should return a user on success', async () => {
         
