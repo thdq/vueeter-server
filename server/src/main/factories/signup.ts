@@ -1,8 +1,8 @@
-import { DbAddUser } from '@/data/usecases/add-user/db-add-user'
-import { BcryptAdapter } from '@/infra/criptography/bcrypt-adapter'
-import { UserPostgreSQLRepository } from '@/infra/database/postgresql/user-repository/user'
-import { SignUpController } from '@/presentation/controllers/signup/signup'
-import { EmailValidatorAdapter } from '@/utils/email-validator-adapter'
+import { DbAddUser } from '../../data/usecases/add-user/db-add-user'
+import { BcryptAdapter } from '../../infra/criptography/bcrypt-adapter'
+import { UserPostgreSQLRepository } from '../../infra/database/postgresql/user-repository/user'
+import { SignUpController } from '../../presentation/controllers/signup/signup'
+import { EmailValidatorAdapter } from '../../utils/email-validator-adapter'
 
 export const makeSignUpController = (): SignUpController => {
     
