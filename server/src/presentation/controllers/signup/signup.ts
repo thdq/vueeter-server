@@ -24,6 +24,8 @@ export class SignUpController implements Controller {
                 if (!httpRequest.body[field]) return badRequest(new MissingParamsError(field))
 
             }
+            
+            if (username.length > 50) return badRequest(new InvalidParamsError("username"))
 
             if (password !== passwordConfirm) return badRequest(new InvalidParamsError("passwordConfirm"))
 

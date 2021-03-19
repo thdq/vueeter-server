@@ -5,15 +5,87 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("POSTGRES_URL")
-  
+
 }
 
+model Vueet {
+  id                   String            @id @default(uuid())
+  text                 String            @db.VarChar(280)
+  source               String
+  in_reply_to_vueet_id String?
+  in_reply_to_user_id  String?
+  created_at           DateTime          @default(now())
+  userId               String
+  UsersFavouriteds     UsersFavourited[]
+  UsersRevueeteds      UserRevueeted[]
+  User                 User              @relation(fields: [userId], references: [id])
+}
+
+// Ref idea: https://developer.twitter.com/en/docs/twitter-api/v1/data-dictionary/object-model/user
+
 model User {
-  id         String   @id @default(uuid())
-  username   String   @unique
-  birth_date DateTime
-  email      String   @unique
-  name       String
-  password   String
-   @@map(name: "user")
+  id                 String             @id @default(uuid())
+  username           String             @unique
+  birth_date         DateTime
+  email              String             @unique
+  name               String             @db.VarChar(50)
+  url                String?
+  description        String?            @db.VarChar(160)
+  verified           Boolean            @default(false)
+  password           String
+  created_at         DateTime           @default(now())
+  profile_banner_url String?
+  profile_image_url  String?
+  Followers          UserFollowed[]
+  Following          UserFollowing[]
+  Favourites         VueetsFavourited[]
+  Vueets             Vueet[]
+  UsersFavourited    UsersFavourited[]
+  UserRevueeted      UserRevueeted[]
+
+  @@map(name: "user")
+}
+
+model UsersFavourited {
+  id      String @id @default(uuid())
+  userId  String
+  vueetId String
+  User  User  @relation(fields: [userId], references: [id])
+  Vueet Vueet @relation(fields: [vueetId], references: [id]) // try remove this
+
+  @@map(name: "user_favourited")
+}
+
+model UserRevueeted {
+  id      String @id @default(uuid())
+  userId  String
+  vueetId String
+  User  User  @relation(fields: [userId], references: [id])
+  Vueet Vueet @relation(fields: [vueetId], references: [id]) // try remove this
+
+  @@map(name: "user_revueeted")
+}
+
+model VueetsFavourited {
+  id     String @id @default(uuid())
+  User   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@map(name: "vueets_favourited")
+}
+
+model UserFollowed {
+  id     String @id @default(uuid())
+  userId String
+  User   User   @relation(fields: [userId], references: [id])
+
+  @@map(name: "user_followed")
+}
+
+model UserFollowing {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map(name: "user_following")
 }

@@ -76,6 +76,27 @@ describe('SignUp Controller', () => {
         expect(httpResponse.body).toEqual(new MissingParamsError('username'))
 
     })
+    
+    test('Should return 400 if username length limit exceeds 50 characters', async () => {
+
+        const { sut } = makeSut()
+
+        const httpRequest = {
+            body: {
+                email: '_any@email',
+                birth_date: '2021-02-28',
+                username: '_any_username_exceeds_50_characters_any_username_exceeds_50_characters',
+                name: '_any_name',
+                password: '_any_password',
+                passwordConfirm: '_any_passwordConfirm'
+            }
+        }
+
+        const httpResponse = await sut.handle(httpRequest)
+        expect(httpResponse.statusCode).toBe(400)
+        expect(httpResponse.body).toEqual(new InvalidParamsError('username'))
+
+    })    
 
     test('Should return 400 if no email is provided', async () => {
 
