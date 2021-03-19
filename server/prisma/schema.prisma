@@ -40,8 +40,6 @@ model User {
   Following          UserFollowing[]
   Favourites         VueetsFavourited[]
   Vueets             Vueet[]
-  UsersFavourited    UsersFavourited[]
-  UserRevueeted      UserRevueeted[]
 
   @@map(name: "user")
 }
@@ -50,7 +48,6 @@ model UsersFavourited {
   id      String @id @default(uuid())
   userId  String
   vueetId String
-  User  User  @relation(fields: [userId], references: [id])
   Vueet Vueet @relation(fields: [vueetId], references: [id]) // try remove this
 
   @@map(name: "user_favourited")
@@ -60,7 +57,6 @@ model UserRevueeted {
   id      String @id @default(uuid())
   userId  String
   vueetId String
-  User  User  @relation(fields: [userId], references: [id])
   Vueet Vueet @relation(fields: [vueetId], references: [id]) // try remove this
 
   @@map(name: "user_revueeted")
