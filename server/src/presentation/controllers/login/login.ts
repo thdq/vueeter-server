@@ -1,7 +1,6 @@
-import { Authentication } from '../../../domain/usecases/authentication'
+import { Controller, HttpRequest, HttpResponse, Authentication } from './login.protocols'
 import { MissingParamsError } from '../../../presentation/errors'
 import { badRequest, serverError, unauthorized } from '../../../presentation/helpers/http'
-import { Controller, HttpRequest, HttpResponse } from '../../protocols'
 
 export class LoginController implements Controller {
     private readonly authentication: Authentication
