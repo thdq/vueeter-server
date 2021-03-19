@@ -1,17 +1,34 @@
 import { LoginController } from './login'
 import { badRequest } from '../../helpers/http'
 import { MissingParamsError } from '../../../presentation/errors'
+import { Authentication } from '../../../domain/usecases/authentication'
 
 interface SutTypes {
     sut: LoginController
+    authenticationStub: Authentication
+}
+const makeAuthentication = (): Authentication => {
+    
+    class AuthenticationStub implements Authentication {
+        
+        async auth (email: string, password: string): Promise<string> {
+            return new Promise(resolve => resolve('_any_token'))
+        }
+        
+    }
+    
+    return new AuthenticationStub()
+    
 }
 
 const makeSut = (): SutTypes => {
     
-    const sut = new LoginController()
+    const authenticationStub = makeAuthentication()
+    const sut = new LoginController(authenticationStub)
     
     return {
-        sut
+        sut,
+        authenticationStub
     }
     
 }
@@ -45,6 +62,23 @@ describe('Login Controller', () => {
         
         const httpResponse = await sut.handle(httpRequest)
         expect(httpResponse).toEqual(badRequest(new MissingParamsError('password')))
+        
+    })
+    
+    test('Should call Authentication with correct values', async () => {
+        
+        const { sut, authenticationStub } = makeSut()
+        const authSpy = jest.spyOn(authenticationStub, 'auth')
+        
+        const httpRequest = {
+            body: {
+                username: '_any_username',
+                password: '_any_password'
+            }
+        }
+        
+        await sut.handle(httpRequest)
+        expect(authSpy).toHaveBeenCalledWith('_any_username', '_any_password')
         
     })
     
