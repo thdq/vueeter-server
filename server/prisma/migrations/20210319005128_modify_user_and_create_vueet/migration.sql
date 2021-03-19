@@ -45,7 +45,7 @@ CREATE TABLE "user_revueeted" (
 );
 
 -- CreateTable
-CREATE TABLE "user_favourited" (
+CREATE TABLE "vueets_favourited" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
 
@@ -84,7 +84,7 @@ ALTER TABLE "user_revueeted" ADD FOREIGN KEY ("userId") REFERENCES "user"("id") 
 ALTER TABLE "user_revueeted" ADD FOREIGN KEY ("vueetId") REFERENCES "Vueet"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "user_favourited" ADD FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "vueets_favourited" ADD FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "user_followed" ADD FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;

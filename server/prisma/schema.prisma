@@ -71,7 +71,7 @@ model VueetsFavourited {
   User   User   @relation(fields: [userId], references: [id])
   userId String
 
-  @@map(name: "user_favourited")
+  @@map(name: "vueets_favourited")
 }
 
 model UserFollowed {
