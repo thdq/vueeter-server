@@ -1,6 +1,7 @@
 import { SignUpController } from './signup'
 import { MissingParamsError, ServerError, InvalidParamsError } from '../../errors'
 import { EmailValidator, UserModel, AddUser, AddUserModel, Validation } from './signup.protocols'
+import { badRequest } from '../../../presentation/helpers/http'
 
 interface SutTypes {
     sut: SignUpController
@@ -345,6 +346,27 @@ describe('SignUp Controller', () => {
         await sut.handle(httpRequest)
         expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
         
+    })    
+    
+    test('Should return 400 if Validation returns an error', async () => {
+        
+        const { sut, validationStub } = makeSut()
+        
+        jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamsError('_any_field'))
+        
+        const httpRequest = {
+            body: {
+                username: '_any_username',
+                birth_date: '2021-02-28',
+                email: '_any_mail@email',
+                name: '_any_name',
+                password: '_any_password',
+                passwordConfirm: '_any_password'
+            }
+        }        
+        
+        const httpResponse = await sut.handle(httpRequest)
+        expect(httpResponse).toEqual(badRequest(new MissingParamsError('_any_field')))
     })    
 
 })
