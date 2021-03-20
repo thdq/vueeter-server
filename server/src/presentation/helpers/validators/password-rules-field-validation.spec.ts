@@ -31,6 +31,18 @@ describe('PasswordRulesField Validation', () => {
         
         expect(error).toEqual(new InvalidParamsError('password'))
         
+    }) 
+    
+    test('Should return a InvalidParamsError if the password is not longer than or equal to 8 characters', () => {
+        
+        const sut = makeSut()
+        
+        const error = sut.validate({
+            password: 'Thiag12'
+        })
+        
+        expect(error).toEqual(new InvalidParamsError('password'))
+        
     })    
     
 })
