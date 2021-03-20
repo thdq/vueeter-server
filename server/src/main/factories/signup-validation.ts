@@ -10,10 +10,8 @@ export const makeSignUpValidation = (): ValidationComposite => {
         
     }
     validations.push(new CompareFieldValidation('password', 'passwordConfirm'))
-    
-    const MAXLENGTH = 50
         
-    validations.push(new MaxLengthFieldValidation('username', MAXLENGTH))    
+    validations.push(new MaxLengthFieldValidation('username'))    
     
     return new ValidationComposite(validations)
 }
