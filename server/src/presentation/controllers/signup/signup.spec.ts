@@ -69,26 +69,6 @@ const makeSut = (): SutTypes => {
 }
 
 describe('SignUp Controller', () => {
-
-    test('Should return 400 if no username is provided', async () => {
-
-        const { sut } = makeSut()
-
-        const httpRequest = {
-            body: {
-                email: '_any@email',
-                birth_date: '2021-02-28',
-                name: '_any_name',
-                password: '_any_password',
-                passwordConfirm: '_any_passwordConfirm'
-            }
-        }
-
-        const httpResponse = await sut.handle(httpRequest)
-        expect(httpResponse.statusCode).toBe(400)
-        expect(httpResponse.body).toEqual(new MissingParamsError('username'))
-
-    })
     
     test('Should return 400 if username length limit exceeds 50 characters', async () => {
 
@@ -110,86 +90,6 @@ describe('SignUp Controller', () => {
         expect(httpResponse.body).toEqual(new InvalidParamsError('username'))
 
     })    
-
-    test('Should return 400 if no email is provided', async () => {
-
-        const { sut } = makeSut()
-
-        const httpRequest = {
-            body: {
-                username: '_any_username',
-                birth_date: '2021-02-28',
-                name: '_any_name',
-                password: '_any_password',
-                passwordConfirm: '_any_passwordConfirm'
-            }
-        }
-
-        const httpResponse = await sut.handle(httpRequest)
-        expect(httpResponse.statusCode).toBe(400)
-        expect(httpResponse.body).toEqual(new MissingParamsError('email'))
-
-    })
-
-    test('Should return 400 if no birth date is provided', async () => {
-
-        const { sut } = makeSut()
-
-        const httpRequest = {
-            body: {
-                username: '_any_username',
-                email: '_any@email',
-                name: '_any_name',
-                password: '_any_password',
-                passwordConfirm: '_any_passwordConfirm'
-            }
-        }
-
-        const httpResponse = await sut.handle(httpRequest)
-        expect(httpResponse.statusCode).toBe(400)
-        expect(httpResponse.body).toEqual(new MissingParamsError('birth_date'))
-
-    })
-
-    test('Should return 400 if no password is provided', async () => {
-
-        const { sut } = makeSut()
-
-        const httpRequest = {
-            body: {
-                username: '_any_username',
-                birth_date: '2021-02-28',
-                email: '_any@email',
-                name: '_any_name',
-                passwordConfirm: '_any_passwordConfirm'
-            }
-        }
-
-        const httpResponse = await sut.handle(httpRequest)
-        expect(httpResponse.statusCode).toBe(400)
-        expect(httpResponse.body).toEqual(new MissingParamsError('password'))
-
-    })
-
-    test('Should return 400 if no password confirmation is provided', async () => {
-
-        const { sut } = makeSut()
-
-        const httpRequest = {
-            body: {
-                username: '_any_username',
-                birth_date: '2021-02-28',
-                email: '_any@email',
-                name: '_any_name',
-                password: '_any_password'
-            }
-        }
-
-        const httpResponse = await sut.handle(httpRequest)
-        expect(httpResponse.statusCode).toBe(400)
-        expect(httpResponse.body).toEqual(new MissingParamsError('passwordConfirm'))
-
-    })
 
     test('Should return 400 if no confirmation fails', async () => {
 
