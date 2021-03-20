@@ -21,4 +21,16 @@ describe('PasswordRulesField Validation', () => {
         
     })
     
+    test('Should return a InvalidParamsError if password not contains uppercase', () => {
+        
+        const sut = makeSut()
+        
+        const error = sut.validate({
+            password: 'thiago123'
+        })
+        
+        expect(error).toEqual(new InvalidParamsError('password'))
+        
+    })    
+    
 })
