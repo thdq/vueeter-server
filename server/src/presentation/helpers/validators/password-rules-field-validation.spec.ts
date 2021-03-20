@@ -45,4 +45,16 @@ describe('PasswordRulesField Validation', () => {
         
     })    
     
+    test('Should not return if validation succeeds', () => {
+        
+        const sut = makeSut()
+        
+        const error = sut.validate({
+            password: 'Thiago123'
+        })
+        
+        expect(error).toBeFalsy()
+        
+    })    
+    
 })
