@@ -1,6 +1,6 @@
 import { Controller, HttpRequest, HttpResponse, Authentication } from './login.protocols'
 import { MissingParamsError } from '../../../presentation/errors'
-import { badRequest, serverError, unauthorized } from '../../../presentation/helpers/http'
+import { badRequest, serverError, serverSuccess, unauthorized } from '../../../presentation/helpers/http'
 
 export class LoginController implements Controller {
     private readonly authentication: Authentication
@@ -27,7 +27,7 @@ export class LoginController implements Controller {
             
             if (!accessToken) return unauthorized()
             
-            return new Promise(resolve => resolve(null))            
+            return serverSuccess({ accessToken })     
             
         } catch (error) {
             return serverError()
