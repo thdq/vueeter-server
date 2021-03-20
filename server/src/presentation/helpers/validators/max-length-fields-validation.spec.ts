@@ -19,6 +19,18 @@ describe('MaxLengthField Validation', () => {
         
         expect(error).toEqual(new InvalidParamsError('username'))
         
-    })  
+    })
+    
+    test('Should not return if validation succeeds', () => {
+        
+        const sut = makeSut()
+        
+        const error = sut.validate({
+            username: '_valid_username'
+        })
+        
+        expect(error).toBeFalsy()
+        
+    })      
     
 })
