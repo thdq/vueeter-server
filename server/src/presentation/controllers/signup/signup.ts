@@ -18,7 +18,9 @@ export class SignUpController implements Controller {
 
         try {
             
-            this.validation.validate(httpRequest.body)
+            const error = this.validation.validate(httpRequest.body)
+            
+            if (error) return badRequest(error)
 
             const { email, password, passwordConfirm, birth_date, name, username } = httpRequest.body
 
