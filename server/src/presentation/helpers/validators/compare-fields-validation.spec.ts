@@ -20,4 +20,17 @@ describe('CompareFields Validation', () => {
         
     })
     
+    test('Should not return if validation succeeds', () => {
+        
+        const sut = makeSut()
+        
+        const error = sut.validate({
+            field: '_any_value',
+            fieldToCompare: '_any_value'
+        })
+        
+        expect(error).toBeFalsy()
+        
+    })    
+    
 })
