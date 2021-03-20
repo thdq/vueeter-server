@@ -1,9 +1,5 @@
 import { makeSignUpValidation } from './signup-validation'
-import { ValidationComposite } from '../../presentation/helpers/validators/validation-composite'
-import { RequiredFieldValidation } from '../../presentation/helpers/validators/required-field-validation'
-import { Validation } from '../../presentation/helpers/validators/validation'
-import { CompareFieldValidation } from '../../presentation/helpers/validators/compare-fields-validation'
-import { MaxLengthFieldValidation } from '../../presentation/helpers/validators/max-length-fields-validation'
+import { ValidationComposite, RequiredFieldValidation, Validation, CompareFieldValidation, MaxLengthFieldValidation } from '../../presentation/helpers/validators'
 
 jest.mock('../../presentation/helpers/validators/validation-composite')
 
