@@ -3,6 +3,7 @@ import { BcryptAdapter } from '../../infra/criptography/bcrypt-adapter'
 import { UserPostgreSQLRepository } from '../../infra/database/postgresql/user-repository/user'
 import { SignUpController } from '../../presentation/controllers/signup/signup'
 import { EmailValidatorAdapter } from '../../utils/email-validator-adapter'
+import { makeSignUpValidation } from './signup-validation'
 
 export const makeSignUpController = (): SignUpController => {
     
@@ -13,8 +14,9 @@ export const makeSignUpController = (): SignUpController => {
     const userRepo = new UserPostgreSQLRepository()
     
     const addUser = new DbAddUser(encrypter, userRepo)
+    const signUpValidation = makeSignUpValidation()
     
-    const signUpController = new SignUpController(emailValidator, addUser)
+    const signUpController = new SignUpController(emailValidator, addUser, signUpValidation)
     
     return signUpController
 }
