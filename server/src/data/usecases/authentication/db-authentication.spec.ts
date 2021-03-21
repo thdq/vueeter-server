@@ -1,6 +1,7 @@
 import { UserModel } from "../../../domain/models/user"
 import { LoadUserByUsernameRepository } from "../../../data/protocols/repository/load-user-by-username"
 import { DbAuthentication } from './db-authentication'
+import { HashCompare } from '../../../data/protocols/cripotagraphy/hash-compare'
 
 const makeLoadUserByUsernameRepository = (): LoadUserByUsernameRepository => {
     
@@ -13,7 +14,7 @@ const makeLoadUserByUsernameRepository = (): LoadUserByUsernameRepository => {
                 birth_date: new Date('2021-03-21'),
                 email: '_valid@email',
                 name: '_any_name',
-                password: '_any_password'
+                password: '_hashed_password'
             }
             
             return new Promise(resolve => resolve(user))
@@ -23,25 +24,42 @@ const makeLoadUserByUsernameRepository = (): LoadUserByUsernameRepository => {
     return new LoadUserByUsernameRepositoryStub()
 }
 
+const makehashCompare = (): HashCompare => {
+    
+    class HashCompareStub implements HashCompare {
+        async compare (value: string, hash: string): Promise<boolean> {
+            
+            return new Promise(resolve => resolve(true))
+        }
+    }
+    
+    return new HashCompareStub()
+}
+
 interface SutTypes {
     sut: DbAuthentication
     loadUserByUsernameRepositoryStub: LoadUserByUsernameRepository
+    hashCompareStub: HashCompare
 }
 
 const makeSut = (): SutTypes => {
     
     const loadUserByUsernameRepositoryStub = makeLoadUserByUsernameRepository()
-    const sut = new DbAuthentication(loadUserByUsernameRepositoryStub)
+    
+    const hashCompareStub = makehashCompare()
+    
+    const sut = new DbAuthentication(loadUserByUsernameRepositoryStub, hashCompareStub)
     
     return {
         sut,
-        loadUserByUsernameRepositoryStub
+        loadUserByUsernameRepositoryStub,
+        hashCompareStub
     }
 }
 
 describe('DbAuthentication UseCase', () => {
     
-    test('Should call LoadUserByUsernameRepository with correct email', async () => {
+    test('Should call LoadUserByUsernameRepository with correct username', async () => {
         
         const { sut, loadUserByUsernameRepositoryStub } = makeSut()
         
@@ -85,5 +103,20 @@ describe('DbAuthentication UseCase', () => {
         expect(accessToken).toBeNull()
         
     })
+    
+    test('Should call HashComparer with correct values', async () => {
+        
+        const { sut, hashCompareStub } = makeSut()
+        
+        const compareSpy = jest.spyOn(hashCompareStub, 'compare')
+        
+        await sut.auth({
+            username: 'thdq',
+            password: '_any_password'
+        })
+        
+        expect(compareSpy).toHaveBeenCalledWith('_any_password', '_hashed_password')
+        
+    })    
     
 })
