@@ -2,6 +2,7 @@ import { UserModel } from "../../../domain/models/user"
 import { LoadUserByUsernameRepository } from "../../../data/protocols/repository/load-user-by-username"
 import { DbAuthentication } from './db-authentication'
 import { HashCompare } from '../../../data/protocols/cripotagraphy/hash-compare'
+import { TokenGenerator } from '../../../data/protocols/cripotagraphy/token-generator'
 
 const makeLoadUserByUsernameRepository = (): LoadUserByUsernameRepository => {
     
@@ -24,7 +25,7 @@ const makeLoadUserByUsernameRepository = (): LoadUserByUsernameRepository => {
     return new LoadUserByUsernameRepositoryStub()
 }
 
-const makehashCompare = (): HashCompare => {
+const makeHashCompare = (): HashCompare => {
     
     class HashCompareStub implements HashCompare {
         async compare (value: string, hash: string): Promise<boolean> {
@@ -36,24 +37,39 @@ const makehashCompare = (): HashCompare => {
     return new HashCompareStub()
 }
 
+const makeTokenGenerator = (): TokenGenerator => {
+    class TokenGeneratorStub implements TokenGenerator {
+        async generate (id: string): Promise<string> {
+            
+            return new Promise(resolve => resolve('_any_token'))
+        }
+    }
+    
+    return new TokenGeneratorStub()
+}
+
 interface SutTypes {
     sut: DbAuthentication
     loadUserByUsernameRepositoryStub: LoadUserByUsernameRepository
     hashCompareStub: HashCompare
+    tokenGeneratorStub: TokenGenerator
 }
 
 const makeSut = (): SutTypes => {
     
     const loadUserByUsernameRepositoryStub = makeLoadUserByUsernameRepository()
     
-    const hashCompareStub = makehashCompare()
+    const hashCompareStub = makeHashCompare()
     
-    const sut = new DbAuthentication(loadUserByUsernameRepositoryStub, hashCompareStub)
+    const tokenGeneratorStub = makeTokenGenerator()
+    
+    const sut = new DbAuthentication(loadUserByUsernameRepositoryStub, hashCompareStub, tokenGeneratorStub)
     
     return {
         sut,
         loadUserByUsernameRepositoryStub,
-        hashCompareStub
+        hashCompareStub,
+        tokenGeneratorStub
     }
 }
 
@@ -148,5 +164,20 @@ describe('DbAuthentication UseCase', () => {
         expect(accessToken).toBeNull()
         
     })    
+    
+    test('Should call TokenGenerator with correct id', async () => {
+        
+        const { sut, tokenGeneratorStub } = makeSut()
+        
+        const generateSpy = jest.spyOn(tokenGeneratorStub, 'generate')
+        
+        await sut.auth({
+            username: 'thdq',
+            password: '_any_password'
+        })
+        
+        expect(generateSpy).toHaveBeenCalledWith('_valid_id')
+        
+    })      
     
 })
