@@ -70,4 +70,20 @@ describe('DbAuthentication UseCase', () => {
         await expect(promise).rejects.toThrow()
         
     })
+    
+    test('Should return null LoadUserByUsernameRepository returns null', async () => { 
+        
+        const { sut, loadUserByUsernameRepositoryStub } = makeSut()
+        
+        jest.spyOn(loadUserByUsernameRepositoryStub, 'load').mockReturnValueOnce(null)
+        
+        const accessToken = await sut.auth({
+            username: 'thdq',
+            password: '_any_password'
+        })
+        
+        expect(accessToken).toBeNull()
+        
+    })
+    
 })
