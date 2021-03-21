@@ -1,6 +1,6 @@
-import { EmailValidatorAdapter } from '../../utils/email-validator-adapter'
-import { ValidationComposite, RequiredFieldValidation, Validation, CompareFieldValidation, MaxLengthFieldValidation } from '../../presentation/helpers/validators'
-import { EmailValidation } from '../../presentation/helpers/validators/email-validation'
+import { EmailValidatorAdapter } from '../../../utils/email-validator-adapter'
+import { ValidationComposite, RequiredFieldValidation, Validation, CompareFieldValidation, MaxLengthFieldValidation } from '../../../presentation/helpers/validators'
+import { EmailValidation } from '../../../presentation/helpers/validators/email-validation'
 
 export const makeSignUpValidation = (): ValidationComposite => {
     

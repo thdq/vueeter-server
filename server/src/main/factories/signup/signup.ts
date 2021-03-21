@@ -1,7 +1,7 @@
-import { DbAddUser } from '../../data/usecases/add-user/db-add-user'
-import { BcryptAdapter } from '../../infra/criptography/bcrypt-adapter'
-import { UserPostgreSQLRepository } from '../../infra/database/postgresql/user-repository/user'
-import { SignUpController } from '../../presentation/controllers/signup/signup'
+import { DbAddUser } from '../../../data/usecases/add-user/db-add-user'
+import { BcryptAdapter } from '../../../infra/criptography/bcrypt-adapter'
+import { UserPostgreSQLRepository } from '../../../infra/database/postgresql/user-repository/user'
+import { SignUpController } from '../../../presentation/controllers/signup/signup'
 import { makeSignUpValidation } from './signup-validation'
 
 export const makeSignUpController = (): SignUpController => {
