@@ -56,4 +56,18 @@ describe('DbAuthentication UseCase', () => {
         
     })
     
+    test('Should throw if LoadUserByUsernameRepository throws', async () => {
+        
+        const { sut, loadUserByUsernameRepositoryStub } = makeSut()
+        
+        jest.spyOn(loadUserByUsernameRepositoryStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+        
+        const promise = sut.auth({
+            username: 'thdq',
+            password: '_any_password'
+        })
+        
+        await expect(promise).rejects.toThrow()
+        
+    })
 })
