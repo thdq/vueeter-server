@@ -1,6 +1,6 @@
 export * from './compare-fields-validation'
 export * from './max-length-fields-validation'
 export * from './required-field-validation'
-export * from './validation'
+export * from '../../protocols/validation'
 export * from './validation-composite'
 export * from './password-rules-field-validation'

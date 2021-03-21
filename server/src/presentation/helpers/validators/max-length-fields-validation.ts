@@ -1,5 +1,5 @@
 import { InvalidParamsError } from '../../../presentation/errors'
-import { Validation } from './validation'
+import { Validation } from '../../protocols/validation'
 
 export class MaxLengthFieldValidation implements Validation {
     private readonly fieldName: string
