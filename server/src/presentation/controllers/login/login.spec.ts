@@ -2,6 +2,7 @@ import { LoginController } from './login'
 import { badRequest, serverError, serverSuccess, unauthorized } from '../../helpers/http'
 import { MissingParamsError } from '../../../presentation/errors'
 import { Authentication, Validation } from './login.protocols'
+import { AuthenticationModel } from '../../../domain/usecases'
 
 interface SutTypes {
     sut: LoginController
@@ -13,7 +14,7 @@ const makeAuthentication = (): Authentication => {
     
     class AuthenticationStub implements Authentication {
         
-        async auth (email: string, password: string): Promise<string> {
+        async auth (authentication: AuthenticationModel): Promise<string> {
             return new Promise(resolve => resolve('_any_token'))
         }
         
@@ -63,7 +64,10 @@ describe('Login Controller', () => {
         }
         
         await sut.handle(httpRequest)
-        expect(authSpy).toHaveBeenCalledWith('_any_username', '_any_password')
+        expect(authSpy).toHaveBeenCalledWith({
+            username: '_any_username',
+            password: '_any_password'
+        })
         
     })
     
