@@ -1,7 +1,21 @@
 import { makeSignUpValidation } from './signup-validation'
 import { ValidationComposite, RequiredFieldValidation, Validation, CompareFieldValidation, MaxLengthFieldValidation } from '../../presentation/helpers/validators'
+import { EmailValidation } from '../../presentation/helpers/validators/email-validation'
+import { EmailValidator } from '../../presentation/protocols/validator'
 
 jest.mock('../../presentation/helpers/validators/validation-composite')
+
+const makeEmailValidator = (): EmailValidator => {
+    
+    class EmailValidatorStub implements EmailValidator {
+        isValid (email: string): boolean {
+            return true
+        }
+    }
+
+    return new EmailValidatorStub()
+
+}
 
 describe('SignUpValidation Factory', () => {
     
@@ -19,9 +33,9 @@ describe('SignUpValidation Factory', () => {
         
         validations.push(new CompareFieldValidation('password', 'passwordConfirm'))
         
-        const MAXLENGTH = 50
+        validations.push(new EmailValidation('email', makeEmailValidator()))
         
-        validations.push(new MaxLengthFieldValidation('username', MAXLENGTH))
+        validations.push(new MaxLengthFieldValidation('username'))
         
         expect(ValidationComposite).toHaveBeenCalledWith(validations)
     })
