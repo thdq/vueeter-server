@@ -16,14 +16,20 @@ export class DbAuthentication {
     
     async auth (authentication: AuthenticationModel): Promise<string> {
         
+        let accessToken = null
+        
         const user = await this.loadUserByUsernameRepository.load(authentication.username)
         
         if (user) {
-            await this.hashCompare.compare(authentication.password, user.password)
-            await this.tokenGenerator.generate(user.id)
+            const isValid = await this.hashCompare.compare(authentication.password, user.password)
+            
+            if (isValid) {
+                accessToken = await this.tokenGenerator.generate(user.id)
+                return accessToken
+            }
         }
         
-        return null
+        return accessToken
     }
     
 }
