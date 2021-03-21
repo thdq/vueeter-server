@@ -1,4 +1,4 @@
-import { AddUserRepository } from '@/data/protocols/add-user-repository'
+import { AddUserRepository } from '@/data/protocols/repository/add-user-repository'
 import { UserModel } from '@/domain/models/user'
 import { AddUserModel } from '@/domain/usecases/add-user'
 import { prisma, id } from '../helpers'
