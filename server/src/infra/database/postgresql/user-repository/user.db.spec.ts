@@ -18,6 +18,15 @@ const makeSut = (): SutTypes => {
 describe('User PostgreSQL Repository', () => {
     
     afterAll(async () => {
+        
+        await prisma.user.deleteMany({
+            where: {
+                username: {
+                    startsWith: '!'
+                }
+            }
+        })
+        
         await prisma.$disconnect()
     })
     
@@ -26,7 +35,7 @@ describe('User PostgreSQL Repository', () => {
         const { sut } = makeSut()
         
         const user = await sut.add({
-            username: '_any_username',
+            username: '!1_any_username',
             birth_date: new Date('2021-02-28'),
             email: '_any_mail@email',
             name: '_any_name',
@@ -35,12 +44,38 @@ describe('User PostgreSQL Repository', () => {
         
         expect(user).toBeTruthy()
         expect(user.id).toBeTruthy()
-        expect(user.username).toBe('_any_username')
+        expect(user.username).toBe('!1_any_username')
         expect(user.birth_date.toISOString()).toBe(new Date('2021-02-28').toISOString())
         expect(user.email).toBe('_any_mail@email')
         expect(user.name).toBe('_any_name')
         expect(user.password).toBe('_any_password')
         
     })
+    
+    test('Should return a user if loadByUsername succeeds', async () => {
+        
+        const { sut } = makeSut()
+        
+        await prisma.user.create({
+            data: {
+                username: '!2_any_username',
+                birth_date: new Date('2021-02-28'),
+                email: '_any_mail1@email',
+                name: '_any_name',
+                password: '_any_password'                
+            }
+        })
+        
+        const user = await sut.loadByUsername('!2_any_username')
+        
+        expect(user).toBeTruthy()
+        expect(user.id).toBeTruthy()
+        expect(user.username).toBe('!2_any_username')
+        expect(user.birth_date.toISOString()).toBe(new Date('2021-02-28').toISOString())
+        expect(user.email).toBe('_any_mail1@email')
+        expect(user.name).toBe('_any_name')
+        expect(user.password).toBe('_any_password')
+        
+    })    
     
 })
