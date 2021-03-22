@@ -22,7 +22,7 @@ export class DbAuthentication {
         
         let accessToken = null
         
-        const user = await this.loadUserByUsernameRepository.load(authentication.username)
+        const user = await this.loadUserByUsernameRepository.loadByUsername(authentication.username)
         
         if (user) {
             const isValid = await this.hashCompare.compare(authentication.password, user.password)

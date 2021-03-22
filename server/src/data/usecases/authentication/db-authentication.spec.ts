@@ -8,7 +8,7 @@ import { UpdateAccessTokenRepository } from '../../../data/protocols/repository/
 const makeLoadUserByUsernameRepository = (): LoadUserByUsernameRepository => {
     
     class LoadUserByUsernameRepositoryStub implements LoadUserByUsernameRepository {
-        async load (username: string): Promise<UserModel> {
+        async loadByUsername (username: string): Promise<UserModel> {
             
             const user: UserModel = {
                 id: '_valid_id',
@@ -95,7 +95,7 @@ describe('DbAuthentication UseCase', () => {
         
         const { sut, loadUserByUsernameRepositoryStub } = makeSut()
         
-        const loadSpy = jest.spyOn(loadUserByUsernameRepositoryStub, 'load')
+        const loadSpy = jest.spyOn(loadUserByUsernameRepositoryStub, 'loadByUsername')
         
         await sut.auth({
             username: 'thdq',
@@ -110,7 +110,7 @@ describe('DbAuthentication UseCase', () => {
         
         const { sut, loadUserByUsernameRepositoryStub } = makeSut()
         
-        jest.spyOn(loadUserByUsernameRepositoryStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+        jest.spyOn(loadUserByUsernameRepositoryStub, 'loadByUsername').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
         
         const promise = sut.auth({
             username: 'thdq',
@@ -125,7 +125,7 @@ describe('DbAuthentication UseCase', () => {
         
         const { sut, loadUserByUsernameRepositoryStub } = makeSut()
         
-        jest.spyOn(loadUserByUsernameRepositoryStub, 'load').mockReturnValueOnce(null)
+        jest.spyOn(loadUserByUsernameRepositoryStub, 'loadByUsername').mockReturnValueOnce(null)
         
         const accessToken = await sut.auth({
             username: 'thdq',
