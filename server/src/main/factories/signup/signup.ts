@@ -8,10 +8,10 @@ export const makeSignUpController = (): SignUpController => {
     
     const SALT = 12
     
-    const encrypter = new BcryptAdapter(SALT)
+    const hasher = new BcryptAdapter(SALT)
     const userRepo = new UserPostgreSQLRepository()
     
-    const addUser = new DbAddUser(encrypter, userRepo)
+    const addUser = new DbAddUser(hasher, userRepo)
     const signUpValidation = makeSignUpValidation()
     
     const signUpController = new SignUpController(addUser, signUpValidation)
