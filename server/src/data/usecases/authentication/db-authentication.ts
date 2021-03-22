@@ -30,7 +30,7 @@ export class DbAuthentication {
             if (isValid) {
                 accessToken = await this.encrypter.encrypt(user.id)
                 
-                await this.updateAccessTokenRepository.update(user.id, accessToken)
+                await this.updateAccessTokenRepository.updateAcessToken(user.id, accessToken)
                 
                 return accessToken
             }
