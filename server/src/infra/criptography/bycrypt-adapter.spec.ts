@@ -77,4 +77,14 @@ describe('Bcrypt Adapter', () => {
         
     })    
     
+    test('Should return a hash on success', async () => {
+        
+        const { sut } = makeSut()
+        
+        const isValid = await sut.compare('_any_value', '_any_hash')
+        
+        expect(isValid).toBe(true)
+        
+    })    
+    
 })
