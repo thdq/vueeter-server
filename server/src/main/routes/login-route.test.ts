@@ -62,6 +62,27 @@ describe('Login Routes', () => {
             
         })
         
+        test('Should return a 401 if login is unauthorized', async () => {
+            
+            const password = await hash('_any_password', 12)
+            
+            await prisma.user.create({
+                data: {
+                    username: '!thdqo2',
+                    birth_date: new Date('1999-02-19'),
+                    email: '_any_mail3@email.com',
+                    name: 'Thiago Oliveira',
+                    password: password                   
+                }
+            })
+            
+            await request(app).post('/api/login').send({
+                username: '!thdqo2',
+                password: '_invalid_password'
+            }).expect(401)
+            
+        })        
+        
     })    
     
 })
