@@ -88,4 +88,30 @@ describe('User PostgreSQL Repository', () => {
         
     })
     
+    test('Should update the user accessToken if updateAccessToken succeeds', async () => {
+        
+        const { sut } = makeSut()
+        
+        const userRequest = await prisma.user.create({
+            data: {
+                username: '!3_any_username',
+                birth_date: new Date('2021-02-28'),
+                email: '_any_mail2@email',
+                name: '_any_name',
+                password: '_any_password'                
+            }
+        })
+        
+        await sut.updateAccessToken(userRequest.id, 'any_token')
+        
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userRequest.id
+            }
+        })
+        
+        expect(user.accessToken).toBe('any_token')
+        
+    })     
+    
 })
