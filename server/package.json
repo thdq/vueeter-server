@@ -5,10 +5,10 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "sucrase-node ./src/main/server.ts",
-		"test": "yarn test:unit && yarn test:integration && yarn test:database",
+		"test": "yarn test:unit && yarn test:unit:database && yarn test:integration",
 		"test:unit": "jest --passWithNoTests -c jest.unit.config.js",
 		"test:integration": "jest --passWithNoTests --runInBand -c jest.integration.config.js",
-		"test:database": "jest --passWithNoTests -c jest.database.config.js",
+		"test:unit:database": "jest --passWithNoTests -c jest.database.config.js",
 		"test:staged": "yarn test --passWithNoTests --findRelatedTests",
 		"test:ci": "yarn test --passWithNoTests --coverage --runInBand"
 	},
