@@ -78,4 +78,14 @@ describe('User PostgreSQL Repository', () => {
         
     })    
     
+    test('Should return null if loadByUsername fails', async () => {
+        
+        const { sut } = makeSut()
+        
+        const user = await sut.loadByUsername('!_invalid_username')
+        
+        expect(user).toBeFalsy()
+        
+    })
+    
 })
