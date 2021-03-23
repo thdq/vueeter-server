@@ -1,8 +1,8 @@
-import { AddUserRepository } from '@/data/protocols/repository/user/add-user-repository'
-import { LoadUserByUsernameRepository } from '@/data/protocols/repository/user/load-user-by-username'
-import { UpdateAccessTokenRepository } from '@/data/protocols/repository/user/update-access-token'
-import { UserModel } from '@/domain/models/user'
-import { AddUserModel } from '@/domain/usecases/add-user'
+import { AddUserRepository } from '../../../../data/protocols/repository/user/add-user-repository'
+import { LoadUserByUsernameRepository } from '../../../../data/protocols/repository/user/load-user-by-username'
+import { UpdateAccessTokenRepository } from '../../../../data/protocols/repository/user/update-access-token'
+import { UserModel } from '../../../../domain/models/user'
+import { AddUserModel } from '../../../../domain/usecases/add-user'
 import { prisma, id } from '../helpers'
 
 export class UserPostgreSQLRepository implements AddUserRepository, LoadUserByUsernameRepository, UpdateAccessTokenRepository {
