@@ -1,8 +1,8 @@
 import { AuthenticationModel } from "../../../domain/usecases"
-import { LoadUserByUsernameRepository } from "../../../data/protocols/repository/load-user-by-username"
+import { LoadUserByUsernameRepository } from "../../../data/protocols/repository/user/load-user-by-username"
 import { HashCompare } from "../../../data/protocols/cripotagraphy/hash-compare"
 import { Encrypter } from "../../protocols/cripotagraphy/encrypter"
-import { UpdateAccessTokenRepository } from "../../../data/protocols/repository/update-access-token"
+import { UpdateAccessTokenRepository } from "../../../data/protocols/repository/user/update-access-token"
 
 export class DbAuthentication {
     private readonly loadUserByUsernameRepository: LoadUserByUsernameRepository
@@ -30,7 +30,7 @@ export class DbAuthentication {
             if (isValid) {
                 accessToken = await this.encrypter.encrypt(user.id)
                 
-                await this.updateAccessTokenRepository.updateAcessToken(user.id, accessToken)
+                await this.updateAccessTokenRepository.updateAccessToken(user.id, accessToken)
                 
                 return accessToken
             }

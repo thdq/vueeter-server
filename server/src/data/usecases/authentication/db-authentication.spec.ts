@@ -1,9 +1,9 @@
 import { UserModel } from "../../../domain/models/user"
-import { LoadUserByUsernameRepository } from "../../../data/protocols/repository/load-user-by-username"
+import { LoadUserByUsernameRepository } from "../../../data/protocols/repository/user/load-user-by-username"
 import { DbAuthentication } from './db-authentication'
 import { HashCompare } from '../../../data/protocols/cripotagraphy/hash-compare'
 import { Encrypter } from '../../protocols/cripotagraphy/encrypter'
-import { UpdateAccessTokenRepository } from '../../../data/protocols/repository/update-access-token'
+import { UpdateAccessTokenRepository } from '../../../data/protocols/repository/user/update-access-token'
 
 const makeLoadUserByUsernameRepository = (): LoadUserByUsernameRepository => {
     
@@ -52,7 +52,7 @@ const makeEncrypter = (): Encrypter => {
 const makeUpdateAccessTokenRepository = (): UpdateAccessTokenRepository => {
     class UpdateAccessTokenRepositoryStub implements UpdateAccessTokenRepository {
         
-        async updateAcessToken (id: string, token: string): Promise<void> {
+        async updateAccessToken (id: string, token: string): Promise<void> {
             return new Promise(resolve => resolve())
         }
     }
@@ -228,7 +228,7 @@ describe('DbAuthentication UseCase', () => {
         
         const { sut, updateAccessTokenRepositoryStub } = makeSut()
         
-        const updateSpy = jest.spyOn(updateAccessTokenRepositoryStub, 'updateAcessToken')
+        const updateSpy = jest.spyOn(updateAccessTokenRepositoryStub, 'updateAccessToken')
         
         await sut.auth({
             username: 'thdq',
@@ -243,7 +243,7 @@ describe('DbAuthentication UseCase', () => {
         
         const { sut, updateAccessTokenRepositoryStub } = makeSut()
         
-        jest.spyOn(updateAccessTokenRepositoryStub, 'updateAcessToken').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+        jest.spyOn(updateAccessTokenRepositoryStub, 'updateAccessToken').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
         
         const promise = sut.auth({
             username: 'thdq',
