@@ -36,6 +36,7 @@ model User {
   created_at         DateTime           @default(now())
   profile_banner_url String?
   profile_image_url  String?
+  accessToken        String?
   Followers          UserFollowed[]
   Following          UserFollowing[]
   Favourites         VueetsFavourited[]
