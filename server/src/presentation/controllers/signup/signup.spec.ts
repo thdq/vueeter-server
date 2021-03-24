@@ -1,10 +1,11 @@
 import { SignUpController } from './signup'
 import { MissingParamsError, ServerError } from '../../errors'
-import { UserModel, AddUser, AddUserModel, Validation } from './signup.protocols'
+import { UserModel, AddUser, AddUserModel, Validation, Authentication, AuthenticationModel } from './signup.protocols'
 import { badRequest } from '../../../presentation/helpers/http'
 
 interface SutTypes {
     sut: SignUpController
+    authenticationStub: Authentication
     addUserStub: AddUser
     validationStub: Validation
 }
@@ -40,15 +41,31 @@ const makeValidation = (): Validation => {
     return new ValidationStub()
 }
 
+const makeAuthentication = (): Authentication => {
+    
+    class AuthenticationStub implements Authentication {
+        
+        async auth (authentication: AuthenticationModel): Promise<string> {
+            return new Promise(resolve => resolve('_any_token'))
+        }
+        
+    }
+    
+    return new AuthenticationStub()
+    
+}
+
 const makeSut = (): SutTypes => {
 
     const addUserStub = makeAddUser()
     const validationStub = makeValidation()
+    const authenticationStub = makeAuthentication()
 
-    const sut = new SignUpController(addUserStub, validationStub)
+    const sut = new SignUpController(addUserStub, validationStub, authenticationStub)
 
     return {
         sut,
+        authenticationStub,
         addUserStub,
         validationStub
     }
@@ -169,4 +186,27 @@ describe('SignUp Controller', () => {
         expect(httpResponse).toEqual(badRequest(new MissingParamsError('_any_field')))
     })    
 
+    test('Should call Authentication wit correct values', async () => {
+        
+        const { sut, authenticationStub } = makeSut()
+        
+        const authSpy = jest.spyOn(authenticationStub, 'auth')
+        
+        const httpRequest = {
+            body: {
+                username: 'any_username',
+                password: 'any_password'                
+            }
+            
+        }
+        
+        await sut.handle(httpRequest)
+        
+        expect(authSpy).toHaveBeenCalledWith({
+            username: 'any_username',
+            password: 'any_password'   
+        })
+        
+    })
+    
 })
