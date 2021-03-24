@@ -1,7 +1,7 @@
 import { SignUpController } from './signup'
 import { MissingParamsError, ServerError } from '../../errors'
 import { UserModel, AddUser, AddUserModel, Validation, Authentication, AuthenticationModel } from './signup.protocols'
-import { badRequest, serverError } from '../../../presentation/helpers/http'
+import { badRequest, serverError, serverSuccess } from '../../../presentation/helpers/http'
 
 interface SutTypes {
     sut: SignUpController
@@ -140,7 +140,7 @@ describe('SignUp Controller', () => {
         }
 
         const httpResponse = await sut.handle(httpRequest)
-        expect(httpResponse.statusCode).toBe(200)
+        expect(httpResponse).toEqual(serverSuccess({ accessToken: '_any_token' }))
     })
     
     test('Should call Validation with correct value', async () => {
