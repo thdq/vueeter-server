@@ -1,14 +1,16 @@
-import { HttpResponse, HttpRequest, Controller, AddUser } from './signup.protocols'
+import { HttpResponse, HttpRequest, Controller, AddUser, Authentication } from './signup.protocols'
 import { badRequest, serverError, serverSuccess } from '../../helpers/http'
 import { Validation } from '../../protocols/validation'
 
 export class SignUpController implements Controller {
     private readonly addUser: AddUser
     private readonly validation: Validation
+    private readonly authentication: Authentication
 
-    constructor (addUser: AddUser, validation: Validation) {
+    constructor (addUser: AddUser, validation: Validation, authentication: Authentication) {
         this.addUser = addUser
         this.validation = validation
+        this.authentication = authentication
     }
 
     async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -26,6 +28,11 @@ export class SignUpController implements Controller {
                 birth_date,
                 email,
                 name,
+                password
+            })
+            
+            await this.authentication.auth({
+                username,
                 password
             })
 
