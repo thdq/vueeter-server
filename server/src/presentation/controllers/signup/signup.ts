@@ -1,6 +1,8 @@
 import { HttpResponse, HttpRequest, Controller, AddUser, Authentication } from './signup.protocols'
-import { badRequest, serverError, serverSuccess } from '../../helpers/http'
+import { badRequest, serverError, serverSuccess, forbidden } from '../../helpers/http'
 import { Validation } from '../../protocols/validation'
+import { DatabaseErrorCode } from '../../../presentation/helpers/database/error-enum'
+import { InUseParamsError } from '../../../presentation/errors'
 
 export class SignUpController implements Controller {
     private readonly addUser: AddUser
@@ -39,6 +41,8 @@ export class SignUpController implements Controller {
             return serverSuccess({ accessToken })
 
         } catch (error) {
+            
+            if (error.code === DatabaseErrorCode.UniqueConstraintFailed) return forbidden(new InUseParamsError(error))
 
             return serverError()
 
