@@ -1,7 +1,9 @@
 import { SignUpController } from './signup'
-import { MissingParamsError, ServerError } from '../../errors'
+import { InUseParamsError, MissingParamsError, ServerError } from '../../errors'
 import { UserModel, AddUser, AddUserModel, Validation, Authentication, AuthenticationModel } from './signup.protocols'
-import { badRequest, serverError, serverSuccess } from '../../../presentation/helpers/http'
+import { badRequest, forbidden, serverError, serverSuccess } from '../../../presentation/helpers/http'
+import { DatabaseErrorCode } from '../../../presentation/helpers/database/error-enum'
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 
 interface SutTypes {
     sut: SignUpController
@@ -123,6 +125,39 @@ describe('SignUp Controller', () => {
             password: '_any_password'
         })
     })
+    
+    test('Should return 403 if AddAccount returns an error if username is duplicated', async () => {
+        
+        const { sut, addUserStub } = makeSut()
+        
+        jest.spyOn(addUserStub, 'add').mockImplementationOnce(async () => {
+            return new Promise((resolve, reject) => reject(
+                new PrismaClientKnownRequestError("", DatabaseErrorCode.UniqueConstraintFailed, "0",
+                    {
+                        target: [
+                            "username"
+                        ]   
+                    })
+            )
+            )
+        }) 
+        
+        const httpRequest = {
+            body: {
+                username: '_any_username',
+                birth_date: new Date('2021-02-28'),
+                email: '_any@email',
+                name: '_any_name',
+                password: '_any_password',
+                passwordConfirm: '_any_password'
+            }
+        }        
+        
+        const httpResponse = await sut.handle(httpRequest)
+        
+        expect(httpResponse).toEqual(forbidden(new InUseParamsError("username")))
+        
+    })    
 
     test('Should return 200 if valid data is provided', async () => {
 
