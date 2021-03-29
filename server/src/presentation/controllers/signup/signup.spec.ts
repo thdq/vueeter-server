@@ -151,7 +151,35 @@ describe('SignUp Controller', () => {
         
         expect(httpResponse).toEqual(forbidden(new InUseParamsError("username")))
         
-    })    
+    })
+    
+    test('Should return 403 if AddAccount returns an error if email is duplicated', async () => {
+        
+        const { sut, addUserStub } = makeSut()
+        
+        jest.spyOn(addUserStub, 'add').mockImplementationOnce(async () => {
+            return new Promise((resolve, reject) => reject(
+                UniqueConstraintFailed(DatabaseErrorCode.UniqueConstraintFailed, "email")
+            )
+            )
+        }) 
+        
+        const httpRequest = {
+            body: {
+                username: '_any_username',
+                birth_date: new Date('2021-02-28'),
+                email: '_any@email',
+                name: '_any_name',
+                password: '_any_password',
+                passwordConfirm: '_any_password'
+            }
+        }        
+        
+        const httpResponse = await sut.handle(httpRequest)
+        
+        expect(httpResponse).toEqual(forbidden(new InUseParamsError("email")))
+        
+    })     
 
     test('Should return 200 if valid data is provided', async () => {
 
