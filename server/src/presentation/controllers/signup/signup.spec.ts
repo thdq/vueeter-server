@@ -2,8 +2,7 @@ import { SignUpController } from './signup'
 import { InUseParamsError, MissingParamsError, ServerError } from '../../errors'
 import { UserModel, AddUser, AddUserModel, Validation, Authentication, AuthenticationModel } from './signup.protocols'
 import { badRequest, forbidden, serverError, serverSuccess } from '../../../presentation/helpers/http'
-import { DatabaseErrorCode } from '../../../presentation/helpers/database/error-enum'
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
+import { DatabaseErrorCode, UniqueConstraintFailed } from '../../../presentation/helpers/database'
 
 interface SutTypes {
     sut: SignUpController
@@ -132,12 +131,7 @@ describe('SignUp Controller', () => {
         
         jest.spyOn(addUserStub, 'add').mockImplementationOnce(async () => {
             return new Promise((resolve, reject) => reject(
-                new PrismaClientKnownRequestError("", DatabaseErrorCode.UniqueConstraintFailed, "0",
-                    {
-                        target: [
-                            "username"
-                        ]   
-                    })
+                UniqueConstraintFailed(DatabaseErrorCode.UniqueConstraintFailed, "username")
             )
             )
         }) 
