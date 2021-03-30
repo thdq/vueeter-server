@@ -1,7 +1,7 @@
 import { makeLoginValidation } from './login-validation'
-import { ValidationComposite, RequiredFieldValidation, Validation } from '../../../presentation/helpers/validators'
+import { ValidationComposite, RequiredFieldValidation, Validation } from '../../../../presentation/helpers/validators'
 
-jest.mock('../../../presentation/helpers/validators/validation-composite')
+jest.mock('../../../../presentation/helpers/validators/validation-composite')
 
 describe('LoginValidation Factory', () => {
     
