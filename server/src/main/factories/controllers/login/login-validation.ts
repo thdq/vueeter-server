@@ -1,4 +1,4 @@
-import { ValidationComposite, RequiredFieldValidation, Validation } from '../../../../presentation/helpers/validators'
+import { ValidationComposite, RequiredFieldValidation, Validation } from '../../../../presentation/protocols/validation/validators'
 
 export const makeLoginValidation = (): ValidationComposite => {
     

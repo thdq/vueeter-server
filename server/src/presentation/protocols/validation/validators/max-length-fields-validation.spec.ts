@@ -1,5 +1,5 @@
-import { InvalidParamsError } from "../../errors"
-import { MaxLengthFieldValidation } from "./"
+import { InvalidParamsError } from "../../../errors"
+import { MaxLengthFieldValidation } from "."
 
 const makeSut = (): MaxLengthFieldValidation => {
     

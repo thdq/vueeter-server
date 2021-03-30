@@ -1,5 +1,5 @@
-import { InvalidParamsError } from "../../../presentation/errors"
-import { PasswordRulesFieldValidation } from './'
+import { InvalidParamsError } from "../../../errors"
+import { PasswordRulesFieldValidation } from '.'
 
 const makeSut = (): PasswordRulesFieldValidation => {
     

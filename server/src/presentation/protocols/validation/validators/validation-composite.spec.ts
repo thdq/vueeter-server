@@ -1,5 +1,5 @@
-import { Validation } from "../../../presentation/controllers/signup/signup.protocols"
-import { MissingParamsError } from "../../../presentation/errors"
+import { Validation } from "../../../controllers/signup/signup.protocols"
+import { MissingParamsError } from "../../../errors"
 import { ValidationComposite } from "./validation-composite"
 
 interface SutTypes {

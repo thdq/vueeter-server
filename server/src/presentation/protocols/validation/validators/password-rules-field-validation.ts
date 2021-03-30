@@ -1,5 +1,5 @@
-import { InvalidParamsError } from "../../../presentation/errors"
-import { Validation } from "../../../presentation/controllers/signup/signup.protocols"
+import { InvalidParamsError } from "../../../errors"
+import { Validation } from "../../../controllers/signup/signup.protocols"
 
 export class PasswordRulesFieldValidation implements Validation {
     private readonly fieldName: string

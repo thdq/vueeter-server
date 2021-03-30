@@ -1,9 +1,9 @@
 import { makeSignUpValidation } from './signup-validation'
-import { ValidationComposite, RequiredFieldValidation, Validation, CompareFieldValidation, MaxLengthFieldValidation } from '../../../../presentation/helpers/validators'
-import { EmailValidation } from '../../../../presentation/helpers/validators/email-validation'
-import { EmailValidator } from '../../../../presentation/protocols/validator'
+import { ValidationComposite, RequiredFieldValidation, Validation, CompareFieldValidation, MaxLengthFieldValidation } from '../../../../presentation/protocols/validation/validators'
+import { EmailValidation } from '../../../../presentation/protocols/validation/validators/email-validation'
+import { EmailValidator } from '../../../../presentation/protocols/validation/protocols'
 
-jest.mock('../../../../presentation/helpers/validators/validation-composite')
+jest.mock('../../../../presentation/protocols/validation/validators/validation-composite')
 
 const makeEmailValidator = (): EmailValidator => {
     
