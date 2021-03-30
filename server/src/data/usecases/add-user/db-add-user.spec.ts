@@ -1,10 +1,32 @@
-import { Hasher, AddUserModel, UserModel, AddUserRepository } from "./db-add-user.protocol"
+import { Hasher, AddUserModel, UserModel, AddUserRepository, LoadUserByUsernameRepository } from "./db-add-user.protocol"
 import { DbAddUser } from "./db-add-user"
 
 interface SutTypes {
     sut: DbAddUser
     hasherStub: Hasher
     addUserRepositoryStub: AddUserRepository
+    loadUserByUsernameRepositoryStub: LoadUserByUsernameRepository
+}
+
+const makeLoadUserByUsernameRepository = (): LoadUserByUsernameRepository => {
+    
+    class LoadUserByUsernameRepositoryStub implements LoadUserByUsernameRepository {
+        async loadByUsername (username: string): Promise<UserModel> {
+            
+            const user: UserModel = {
+                id: '_valid_id',
+                username: 'thdq',
+                birth_date: new Date('2021-03-21'),
+                email: '_valid@email',
+                name: '_any_name',
+                password: '_hashed_password'
+            }
+            
+            return new Promise(resolve => resolve(user))
+        }
+    }
+    
+    return new LoadUserByUsernameRepositoryStub()
 }
 
 const makeAddUserRepository = (): AddUserRepository => {
@@ -43,12 +65,14 @@ const makeSut = (): SutTypes => {
     
     const hasherStub = makeHasherStub()
     const addUserRepositoryStub = makeAddUserRepository()
-    const sut = new DbAddUser(hasherStub, addUserRepositoryStub)
+    const loadUserByUsernameRepositoryStub = makeLoadUserByUsernameRepository()
+    const sut = new DbAddUser(hasherStub, addUserRepositoryStub, loadUserByUsernameRepositoryStub)
     
     return {
         sut,
         hasherStub,
-        addUserRepositoryStub
+        addUserRepositoryStub,
+        loadUserByUsernameRepositoryStub
     }
 
 }
@@ -165,5 +189,23 @@ describe('DbAddUser Usecase', () => {
         })
         
     })
+    
+    test('Should call LoadUserByUsernameRepository with correct username', async () => {
+        
+        const { sut, loadUserByUsernameRepositoryStub } = makeSut()
+        
+        const loadSpy = jest.spyOn(loadUserByUsernameRepositoryStub, 'loadByUsername')
+        
+        await sut.add({
+            username: '_any_username',
+            email: '_any@email',
+            birth_date: new Date('2021-02-28'),
+            name: '_any_name',
+            password: '_any_password'      
+        })
+        
+        expect(loadSpy).toHaveBeenCalledWith('_any_username')
+        
+    })    
 
 })
