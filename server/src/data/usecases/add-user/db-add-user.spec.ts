@@ -12,17 +12,7 @@ const makeLoadUserByUsernameRepository = (): LoadUserByUsernameRepository => {
     
     class LoadUserByUsernameRepositoryStub implements LoadUserByUsernameRepository {
         async loadByUsername (username: string): Promise<UserModel> {
-            
-            const user: UserModel = {
-                id: '_valid_id',
-                username: 'thdq',
-                birth_date: new Date('2021-03-21'),
-                email: '_valid@email',
-                name: '_any_name',
-                password: '_hashed_password'
-            }
-            
-            return new Promise(resolve => resolve(user))
+            return new Promise(resolve => resolve(null))
         }
     }
     
@@ -187,6 +177,33 @@ describe('DbAddUser Usecase', () => {
             name: '_any_name',
             password: 'hashed_password'            
         })
+        
+    })
+    
+    test('Should return null if LoadUserByUsernameRepository not return null', async () => {
+        
+        const { sut, loadUserByUsernameRepositoryStub } = makeSut()
+        
+        jest.spyOn(loadUserByUsernameRepositoryStub, "loadByUsername").mockReturnValueOnce(
+            new Promise(resolve => resolve({
+                id: '_valid_id',
+                username: '_any_username',
+                email: '_any@email',
+                birth_date: new Date('2021-02-28'),
+                name: '_any_name',
+                password: 'hashed_password'                      
+            }))
+        )
+        
+        const user = await sut.add({
+            username: '_any_username',
+            email: '_any@email',
+            birth_date: new Date('2021-02-28'),
+            name: '_any_name',
+            password: 'hashed_password'                      
+        })
+        
+        expect(user).toBeNull()
         
     })
     
