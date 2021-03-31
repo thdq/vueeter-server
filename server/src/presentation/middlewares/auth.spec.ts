@@ -1,5 +1,6 @@
 import { loadUserByToken, HttpRequest, forbidden, AccessDeniedError, UserModel } from './auth.protocol'
 import { AuthMiddleware } from './auth'
+import { serverSuccess } from '../helpers/http'
 
 interface SutTypes {
     sut: AuthMiddleware
@@ -85,6 +86,24 @@ describe('Auth middleware', () => {
         const httpResponse = await sut.handle(httpRequest)
         
         expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
-    })    
+    })
+    
+    test('Should return 200 if LoadUserByToken return a user', async () => {
+        
+        const { sut } = makeSut()
+        
+        const httpRequest: HttpRequest = {
+            headers: {
+                "x-access-token": "_valid_token"
+            }
+        }
+    
+        const httpResponse = await sut.handle(httpRequest)
+        
+        expect(httpResponse).toEqual(serverSuccess({
+            userId: '_any_id'
+        }))       
+        
+    })
         
 })
