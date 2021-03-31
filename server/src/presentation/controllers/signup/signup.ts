@@ -42,8 +42,6 @@ export class SignUpController implements Controller {
 
         } catch (error) {
             
-            console.error(error)
-            
             if (error.code === DatabaseErrorCode.UniqueConstraintFailed) return forbidden(new InUseParamsError(error))
 
             return serverError()
