@@ -1,6 +1,6 @@
 import { loadUserByToken, HttpRequest, forbidden, AccessDeniedError, UserModel } from './auth.protocol'
 import { AuthMiddleware } from './auth'
-import { serverSuccess } from '../helpers/http'
+import { serverError, serverSuccess } from '../helpers/http'
 
 interface SutTypes {
     sut: AuthMiddleware
@@ -103,6 +103,24 @@ describe('Auth middleware', () => {
         expect(httpResponse).toEqual(serverSuccess({
             userId: '_any_id'
         }))       
+        
+    })
+    
+    test('Should return 500 if LoadUserByToken throws', async () => {
+        
+        const { sut, loadUserByTokenStub } = makeSut()
+        
+        const httpRequest: HttpRequest = {
+            headers: {
+                "x-access-token": "_incorrect_param_token"
+            }
+        }
+        
+        jest.spyOn(loadUserByTokenStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    
+        const httpResponse = await sut.handle(httpRequest)
+        
+        expect(httpResponse).toEqual(serverError())
         
     })
         
