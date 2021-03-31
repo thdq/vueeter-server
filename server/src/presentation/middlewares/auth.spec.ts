@@ -66,11 +66,8 @@ describe('Auth middleware', () => {
         
         await sut.handle(httpRequest)
         
-        expect(loadSpy).toHaveBeenCalledWith({
-            headers: {
-                "x-access-token": "_valid_token"
-            }            
-        })
+        expect(loadSpy).toHaveBeenCalledWith("_valid_token")
+        
     })
         
 })
