@@ -6,6 +6,7 @@ export interface AddUserModel {
     email: string
     name: string
     password: string
+    accessToken?: string
 }
 
 export interface AddUser {
