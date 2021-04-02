@@ -137,6 +137,16 @@ describe('User PostgreSQL Repository', () => {
         expect(user.name).toBe('_any_name')
         expect(user.password).toBe('_any_password')
         
+    }) 
+    
+    test('Should return null if loadByToken fails', async () => {
+        
+        const { sut } = makeSut()
+        
+        const user = await sut.loadByToken('!invalid_token')
+        
+        expect(user).toBeFalsy()
+        
     })    
     
 })
