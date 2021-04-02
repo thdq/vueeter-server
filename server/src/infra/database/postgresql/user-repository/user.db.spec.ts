@@ -112,6 +112,31 @@ describe('User PostgreSQL Repository', () => {
         
         expect(user.accessToken).toBe('any_token')
         
-    })     
+    })
+    
+    test('Should return a user on loadByToken success', async () => {
+        
+        const { sut } = makeSut()
+        
+        await sut.add({
+            username: '!4_any_username',
+            birth_date: new Date('2021-02-28'),
+            email: '_any_mail3@email',
+            name: '_any_name',
+            password: '_any_password',
+            accessToken: '_any_token2'
+        })
+        
+        const user = await sut.loadByToken('_any_token2')
+        
+        expect(user).toBeTruthy()
+        expect(user.id).toBeTruthy()
+        expect(user.username).toBe('!4_any_username')
+        expect(user.birth_date.toISOString()).toBe(new Date('2021-02-28').toISOString())
+        expect(user.email).toBe('_any_mail3@email')
+        expect(user.name).toBe('_any_name')
+        expect(user.password).toBe('_any_password')
+        
+    })    
     
 })
