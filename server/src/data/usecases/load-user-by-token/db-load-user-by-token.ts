@@ -19,7 +19,9 @@ export class DbLoadUserByToken {
         
         if (!token) return null
         
-        await this.loadUserByTokenRepository.loadByToken(token)
+        const user = await this.loadUserByTokenRepository.loadByToken(token)
+        
+        return user
         
     }
     
