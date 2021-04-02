@@ -1,20 +1,26 @@
+import { LoadUserByTokenRepository } from "../../../data/protocols/repository/user/load-user-by-token-repository"
 import { Decrypter } from "../../../data/protocols/cripotagraphy/decrypter"
 import { UserModel } from "../../../domain/models/user"
 
 export class DbLoadUserByToken {
     private readonly decrypter: Decrypter
+    private readonly loadUserByTokenRepository: LoadUserByTokenRepository
     
-    constructor (decrypter: Decrypter) {
+    constructor (decrypter: Decrypter, loadUserByTokenRepository: LoadUserByTokenRepository) {
         
         this.decrypter = decrypter
+        this.loadUserByTokenRepository = loadUserByTokenRepository
         
     }
     
     async load (value: string): Promise<UserModel> {
         
-        await this.decrypter.decrypt(value)
+        const token = await this.decrypter.decrypt(value)
         
-        return new Promise(resolve => resolve(null))
+        if (!token) return null
+        
+        await this.loadUserByTokenRepository.loadByToken(token)
+        
     }
     
 }
