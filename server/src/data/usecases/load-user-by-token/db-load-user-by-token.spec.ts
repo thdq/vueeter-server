@@ -101,6 +101,23 @@ describe('DbLoadUserByToken use case', () => {
         
         expect(user).toBeNull()
 
-    })    
+    })
+    
+    test('Should return a user on success', async () => {
+        
+        const { sut } = makeSut()
+        
+        const user = await sut.load('_any_token')
+        
+        expect(user).toEqual({
+            id: '_any_id',
+            birth_date: new Date('2021-03-30'),
+            name: '_any_name',
+            email: '_any@email.com',
+            password: '_any_password',
+            username: '_any_usernamme'
+        })            
+        
+    })
 
 })
