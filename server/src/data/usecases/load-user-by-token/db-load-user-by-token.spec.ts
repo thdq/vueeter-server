@@ -119,5 +119,17 @@ describe('DbLoadUserByToken use case', () => {
         })            
         
     })
+    
+    test('Should throw if Decrypter throws', async () => {
+
+        const { sut, decrypterStub } = makeSut()
+
+        jest.spyOn(decrypterStub, 'decrypt').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+
+        const promisse = sut.load('_any_token')
+
+        await expect(promisse).rejects.toThrow()
+
+    })    
 
 })
