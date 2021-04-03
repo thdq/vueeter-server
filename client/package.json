@@ -12,16 +12,6 @@
         "lint": "yarn lint:js && yarn lint:style",
         "test": "jest"
     },
-    "lint-staged": {
-        "*.{js,vue}": "eslint",
-        "*.{css,vue}": "stylelint"
-    },
-    "husky": {
-        "hooks": {
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-            "pre-commit": "lint-staged"
-        }
-    },
     "dependencies": {
         "@nuxtjs/axios": "^5.13.1",
         "@nuxtjs/pwa": "^3.3.5",
