@@ -1,0 +1,29 @@
+{
+    "root": true,
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "extends": [
+        "@nuxtjs/eslint-config-typescript",
+        "plugin:nuxt/recommended"
+    ],
+    "plugins": [
+    ],
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "ignorePatterns": ["*.config.js"],
+    "rules": {
+        "@typescript-eslint/indent": ["error", 4],
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "@typescript-eslint/quotes": "off",
+        "@typescript-eslint/camelcase": "off",
+        "padded-blocks": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [2, { "args": "none" }],
+        "no-trailing-spaces": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off"
+    }
+}
