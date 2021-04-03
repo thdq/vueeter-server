@@ -10,11 +10,10 @@
     ],
     "plugins": [
     ],
-    "parserOptions": {
-        "project": "./tsconfig.json"
-    },
     "ignorePatterns": ["*.config.js"],
     "rules": {
+        "quotes": "off",
+        "indent": ["error", 4],
         "@typescript-eslint/indent": ["error", 4],
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/quotes": "off",
