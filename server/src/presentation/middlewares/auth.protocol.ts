@@ -1,4 +1,4 @@
-export * from '../../domain/usecases/load-user-by-username'
+export * from '../../domain/usecases/load-user-by-token'
 export * from '../../domain/models/user'
 export * from '../errors/access-denied-error'
 export * from '../helpers/http'

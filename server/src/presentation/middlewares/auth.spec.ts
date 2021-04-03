@@ -10,7 +10,7 @@ interface SutTypes {
 const makeLoadUserByToken = (): loadUserByToken => {
 
     class LoadUserByTokenStub implements loadUserByToken {
-        async load (httpRequest: HttpRequest): Promise<UserModel> {
+        async load (token: string): Promise<UserModel> {
             return new Promise(resolve => resolve({
                 id: '_any_id',
                 birth_date: new Date('2021-03-30'),
