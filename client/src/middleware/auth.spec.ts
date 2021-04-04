@@ -93,4 +93,14 @@ describe('Auth Middleware', () => {
 
     })
 
+    test('Should return true if user is authenticated and current route is /home', () => {
+
+        const { sut } = makeSut()
+
+        const auth = sut.handle()
+
+        expect(auth).toBe(true)
+
+    })
+
 })
