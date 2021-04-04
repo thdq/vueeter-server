@@ -5,14 +5,15 @@
         "node": true
     },
     "extends": [
-        "@nuxtjs/eslint-config-typescript",
-        "plugin:nuxt/recommended"
+        "@nuxtjs/eslint-config-typescript"
     ],
     "plugins": [
     ],
     "ignorePatterns": ["*.config.js"],
     "rules": {
         "quotes": "off",
+        "vue/html-indent": ["error", 4],
+        "vue/script-indent": ["error", 4],
         "indent": ["error", 4],
         "@typescript-eslint/indent": ["error", 4],
         "@typescript-eslint/strict-boolean-expressions": "off",
