@@ -80,4 +80,17 @@ describe('Auth Middleware', () => {
 
     })
 
+    test('Should return true if user is not authenticated and current route is /signup', () => {
+
+        const { sut } = makeSut()
+
+        jest.spyOn(sut, 'isAuthenticated').mockReturnValueOnce(false)
+        jest.spyOn(sut, 'getCurrentRoute').mockReturnValueOnce("/signup")
+
+        const auth = sut.handle()
+
+        expect(auth).toBe(true)
+
+    })
+
 })
