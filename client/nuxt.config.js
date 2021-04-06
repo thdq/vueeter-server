@@ -1,3 +1,5 @@
+import { langs } from './src/config/i18n'
+
 export default {
     srcDir: 'src/',
     head: {
@@ -21,11 +23,29 @@ export default {
     buildModules: [
         '@nuxt/typescript-build',
         '@nuxtjs/stylelint-module',
-        '@nuxtjs/tailwindcss'
+        '@nuxtjs/tailwindcss',
+        [
+            'nuxt-i18n',
+            {
+                defaultLocale: 'en',
+                locales: [
+                    {
+                        code: 'en',
+                        name: 'English'
+                    },
+                    {
+                        code: 'pt',
+                        name: 'Português'
+                    }
+                ],
+                vueI18n: langs
+              }
+        ]
     ],
     modules: [
         '@nuxtjs/axios',
-        '@nuxtjs/pwa'
+        '@nuxtjs/pwa',
+        'nuxt-i18n'
     ],
     axios: {},
     pwa: {
