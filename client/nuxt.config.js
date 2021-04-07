@@ -14,16 +14,19 @@ export default {
         ]
     },
     css: [
-        'vuesax/dist/vuesax.css'
+        'vuesax/dist/vuesax.css',
+        'assets/css/global.css'
     ],
     plugins: [
-        '@/plugins/vuesax'
+        '@/plugins/vuesax',
+        '~/plugins/composition-api'
     ],
     components: true,
     buildModules: [
         '@nuxt/typescript-build',
         '@nuxtjs/stylelint-module',
         '@nuxtjs/tailwindcss',
+        '@nuxt/typescript-build',
         [
             'nuxt-i18n',
             {
@@ -44,8 +47,7 @@ export default {
     ],
     modules: [
         '@nuxtjs/axios',
-        '@nuxtjs/pwa',
-        'nuxt-i18n'
+        '@nuxtjs/pwa'
     ],
     axios: {},
     pwa: {
