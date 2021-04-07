@@ -1,157 +1,54 @@
 <template>
-  <div class="container">
     <div>
-      <header class="content-logos">
-        <logo />
-        <span class="plus">+</span>
-        <VuesaxLogo />
-      </header>
-      <h1 class="title">
-        Nuxt.js + Vuesax
-      </h1>
-      <h2 class="subtitle">
-        <a href="https://vuesax.com/">Vuesax</a> is a framework of ui components for <a href="https://vuejs.org/">Vuejs</a>, It was created to make new interfaces that have a new trend and are visually beautiful
-      </h2>
-      <div class="links">
-        <h3 class="h3">
-          Vuesax
-        </h3>
-        <a
-          href="https://vuesax.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://discordapp.com/invite/9dsKtvB"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          Discord
-        </a>
-        <a
-          href="https://github.com/lusaxweb/vuesax"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-      <div class="links">
-        <h3 class="h3">
-          Nuxt.js
-        </h3>
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+        <vs-row class="main">
+            <vs-col w="7" class="h-screen w-auto">
+                <img class="object-cover w-full" src="~/assets/images/welcome.png" alt="">
+            </vs-col>
+            <vs-col vs-type="flex" w="5">
+                <vs-row class="mh pt-10" align="center" justify="space-around" direction="column">
+                    <img class="w-20 h-20" src="~/assets/images/vueeter-logo.png">
+                </vs-row>
+
+                <vs-row>
+                    <vs-col w="10">
+                        <vs-row class="mh mb-4 ml-8 pt-8 space-y-10" justify="space-around" direction="column">
+                            <h1 class="text-6xl font-medium tracking-tight">
+                                {{ $t('welcome.title') }}
+                            </h1>
+                            <h2 class="text-3xl font-semibold tracking-tight">
+                                {{ $t('welcome.subscribe') }}
+                            </h2>
+                        </vs-row>
+
+                        <vs-row class="mh mt-10" justify="space-around" direction="column">
+                            <vs-col>
+                                <div class="bg-gray-50 rounded-xl p-4 md:p-0 shadow-sm">
+                                    <div class="pt-6 md:p-8 md:text-left space-y-4">
+                                        <vs-button flat active to="/signup" block>
+                                            {{ $t('welcome.buttons.label.signup') }}
+                                        </vs-button>
+
+                                        <vs-button flat border to="/login" block>
+                                            {{ $t('welcome.buttons.label.login') }}
+                                        </vs-button>
+                                    </div>
+                                </div>
+                            </vs-col>
+                        </vs-row>
+                    </vs-col>
+                </vs-row>
+            </vs-col>
+        </vs-row>
+        <vs-row>
+            <footer class="fixed h-16 w-full bottom-0 flex items-center justify-center">
+                <div class="flex justify-center w-100">
+                    <a href="https://github.com/thdq/vueeter" class="text-gray-700 hover:text-gray-800 m-2">
+                        <svg style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z" />
+                        </svg>
+                    </a>
+                </div>
+            </footer>
+        </vs-row>
     </div>
-  </div>
 </template>
-
-<script>
-import Logo from '~/components/Logo.vue'
-import VuesaxLogo from '~/components/VuesaxLogo.vue'
-
-export default {
-  components: {
-    Logo,
-    VuesaxLogo
-  }
-}
-</script>
-
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 55px;
-  color: #35495e;
-  letter-spacing: 1px;
-  text-transform: capitalize;
-  margin: 25px 0;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 1.1rem;
-  color: #526488;
-  word-spacing: 2px;
-  padding-bottom: 15px;
-  max-width: 600px;
-}
-
-.subtitle a {
-  font-weight: 500;
-  color: inherit;
-}
-
-.links {
-  padding-top: 15px;
-  margin-bottom: 20px;
-}
-
-.content-logos {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 500px;
-}
-
-.plus {
-  font-size: 2.5rem;
-  margin: 15px;
-  color: #35495e;
-}
-
-.h3 {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  font-weight: 400;
-  margin: 10px;
-}
-</style>
