@@ -19,6 +19,7 @@
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/quotes": "off",
         "@typescript-eslint/camelcase": "off",
+        "camelcase": "off",
         "padded-blocks": "off",
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": [2, { "args": "none" }],
