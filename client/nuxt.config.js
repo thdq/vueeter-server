@@ -19,7 +19,8 @@ export default {
     ],
     plugins: [
         '@/plugins/vuesax',
-        '~/plugins/composition-api'
+        '~/plugins/composition-api',
+        '~/plugins/axios'
     ],
     components: true,
     buildModules: [
@@ -49,7 +50,9 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/pwa'
     ],
-    axios: {},
+    axios: {
+        baseURL: 'http://localhost:5050/api'
+    },
     pwa: {
         manifest: {
             lang: 'en'
