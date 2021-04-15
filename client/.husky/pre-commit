@@ -1,8 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-<<<<<<< HEAD
 cd client && yarn lint-staged
-=======
-yarn lint-staged
->>>>>>> f1d8db9682b22ff3d27b812b0f21001335ebf84e
