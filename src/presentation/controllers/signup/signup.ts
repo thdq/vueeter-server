@@ -27,7 +27,7 @@ export class SignUpController implements Controller {
 
             await this.addUser.add({
                 username,
-                birth_date,
+                birth_date: new Date(birth_date),
                 email,
                 name,
                 password
