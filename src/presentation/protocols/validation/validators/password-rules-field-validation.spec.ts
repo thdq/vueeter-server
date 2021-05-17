@@ -1,4 +1,4 @@
-import { InvalidParamsError } from "../../../errors"
+import { InvalidPasswordError } from "../../../errors"
 import { PasswordRulesFieldValidation } from '.'
 
 const makeSut = (): PasswordRulesFieldValidation => {
@@ -17,7 +17,7 @@ describe('PasswordRulesField Validation', () => {
             password: 'thiago'
         })
         
-        expect(error).toEqual(new InvalidParamsError('password'))
+        expect(error).toEqual(new InvalidPasswordError())
         
     })
     
@@ -29,7 +29,7 @@ describe('PasswordRulesField Validation', () => {
             password: 'thiago123'
         })
         
-        expect(error).toEqual(new InvalidParamsError('password'))
+        expect(error).toEqual(new InvalidPasswordError())
         
     }) 
     
@@ -41,7 +41,7 @@ describe('PasswordRulesField Validation', () => {
             password: 'Thiag12'
         })
         
-        expect(error).toEqual(new InvalidParamsError('password'))
+        expect(error).toEqual(new InvalidPasswordError())
         
     })    
     
