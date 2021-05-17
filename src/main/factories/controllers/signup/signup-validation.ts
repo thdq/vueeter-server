@@ -1,5 +1,5 @@
 import { EmailValidatorAdapter } from '../../../adapters/validators/email/email-validator-adapter'
-import { ValidationComposite, RequiredFieldValidation, Validation, CompareFieldValidation, MaxLengthFieldValidation } from '../../../../presentation/protocols/validation/validators'
+import { ValidationComposite, RequiredFieldValidation, Validation, CompareFieldValidation, MaxLengthFieldValidation, PasswordRulesFieldValidation } from '../../../../presentation/protocols/validation/validators'
 import { EmailValidation } from '../../../../presentation/protocols/validation/validators/email-validation'
 
 export const makeSignUpValidation = (): ValidationComposite => {
@@ -15,7 +15,9 @@ export const makeSignUpValidation = (): ValidationComposite => {
     
     validations.push(new EmailValidation('email', new EmailValidatorAdapter()))    
         
-    validations.push(new MaxLengthFieldValidation('username'))    
+    validations.push(new MaxLengthFieldValidation('username'))
+    
+    validations.push(new PasswordRulesFieldValidation('password'))
     
     return new ValidationComposite(validations)
 }

@@ -1,5 +1,5 @@
 import { makeSignUpValidation } from './signup-validation'
-import { ValidationComposite, RequiredFieldValidation, Validation, CompareFieldValidation, MaxLengthFieldValidation } from '../../../../presentation/protocols/validation/validators'
+import { ValidationComposite, RequiredFieldValidation, Validation, CompareFieldValidation, MaxLengthFieldValidation, PasswordRulesFieldValidation } from '../../../../presentation/protocols/validation/validators'
 import { EmailValidation } from '../../../../presentation/protocols/validation/validators/email-validation'
 import { EmailValidator } from '../../../../presentation/protocols/validation/protocols'
 
@@ -36,6 +36,8 @@ describe('SignUpValidation Factory', () => {
         validations.push(new EmailValidation('email', makeEmailValidator()))
         
         validations.push(new MaxLengthFieldValidation('username'))
+        
+        validations.push(new PasswordRulesFieldValidation('password'))
         
         expect(ValidationComposite).toHaveBeenCalledWith(validations)
     })
