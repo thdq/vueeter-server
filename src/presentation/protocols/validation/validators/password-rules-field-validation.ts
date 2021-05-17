@@ -1,4 +1,4 @@
-import { InvalidParamsError } from "../../../errors"
+import { InvalidPasswordError } from "../../../errors"
 import { Validation } from "../../../controllers/signup/signup.protocols"
 
 export class PasswordRulesFieldValidation implements Validation {
@@ -14,7 +14,7 @@ export class PasswordRulesFieldValidation implements Validation {
         const HAVEUPPERCASE = /[A-Z]/.test(input[this.fieldName])
         const HAVEMOREOREQUALTHAN8CHARACTERS = input[this.fieldName].length >= 8
         
-        if (!HAVENUMBER || !HAVEUPPERCASE || !HAVEMOREOREQUALTHAN8CHARACTERS) return new InvalidParamsError(this.fieldName)
+        if (!HAVENUMBER || !HAVEUPPERCASE || !HAVEMOREOREQUALTHAN8CHARACTERS) return new InvalidPasswordError()
     }
     
 }
