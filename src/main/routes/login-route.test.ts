@@ -31,8 +31,8 @@ describe('Login Routes', () => {
                 birth_date: new Date('1999-02-19'),
                 email: '_any_mail@email.com',
                 name: 'Thiago Oliveira',
-                password: '_any_password',
-                passwordConfirm: '_any_password'
+                password: '@1AnyPassword__',
+                passwordConfirm: '@1AnyPassword__'
             }).expect(200)
             
         })
