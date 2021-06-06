@@ -51,7 +51,7 @@ const makeSut = (): SutTypes => {
 
 describe('NewVueet Controller', () => {
 
-    test('Should return 500 if newVueet throws', async () => {
+    test('Should return 500 if NewVueet throws', async () => {
 
         const { sut, newVueetStub } = makeSut()
         
@@ -64,8 +64,7 @@ describe('NewVueet Controller', () => {
                 text: faker.random.word(),
                 source: faker.internet.userAgent(),
                 in_reply_to_vueet_id: null,
-                in_reply_to_user_id: null,
-                user_id: faker.datatype.uuid()
+                in_reply_to_user_id: null
             }
         }
         
@@ -74,6 +73,27 @@ describe('NewVueet Controller', () => {
         expect(httpResponse.body).toEqual(new ServerError())
 
     })
+    
+    test('Should call NewVueet with correct values', async () => {
+
+        const { sut, newVueetStub } = makeSut()
+        
+        const newVueetSpy = jest.spyOn(newVueetStub, 'create')
+                
+        const httpRequest = {
+            body: {
+                text: faker.random.word(),
+                source: faker.internet.userAgent(),
+                in_reply_to_vueet_id: null,
+                in_reply_to_user_id: null
+            }
+        }
+        
+        await sut.handle(httpRequest)
+        
+        expect(newVueetSpy).toHaveBeenCalledWith(httpRequest.body)
+
+    })    
     
     test('Should return 500 if valiadtion throws', async () => {
 
@@ -88,8 +108,7 @@ describe('NewVueet Controller', () => {
                 text: faker.random.word(),
                 source: faker.internet.userAgent(),
                 in_reply_to_vueet_id: null,
-                in_reply_to_user_id: null,
-                user_id: faker.datatype.uuid()
+                in_reply_to_user_id: null
             }
         }
         
