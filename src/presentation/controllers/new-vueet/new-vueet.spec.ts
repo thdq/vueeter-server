@@ -116,6 +116,27 @@ describe('NewVueet Controller', () => {
         expect(httpResponse.statusCode).toBe(500)
         expect(httpResponse.body).toEqual(new ServerError())
 
-    })    
+    })
+    
+    test('Should call Validation with correct values', async () => {
+
+        const { sut, validationStub } = makeSut()
+        
+        const validateSpy = jest.spyOn(validationStub, 'validate')
+                
+        const httpRequest = {
+            body: {
+                text: faker.random.word(),
+                source: faker.internet.userAgent(),
+                in_reply_to_vueet_id: null,
+                in_reply_to_user_id: null
+            }
+        }
+        
+        await sut.handle(httpRequest)
+        
+        expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
+
+    })     
 
 })
