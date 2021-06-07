@@ -2,6 +2,7 @@ import { NewVueetRepository } from "@/data/protocols/repository/vueet/new-vueet-
 import { AddVueetModel } from "@/domain/usecases/new-vueet"
 import { DbNewVueet } from "./db-new-vueet"
 import faker from 'faker'
+import { VueetModel } from "@/domain/models/vueet"
 
 interface SutTypes {
     sut: DbNewVueet
@@ -11,8 +12,19 @@ interface SutTypes {
 const makeNewVueetRepository = (): NewVueetRepository => {
     
     class NewVueetRepositoryStub implements NewVueetRepository {
-        async create (fakeNewVueet): Promise<void> {
-            await null
+        
+        async create (): Promise<VueetModel> {
+            
+            return Promise.resolve({
+                created_at: new Date(),
+                text: faker.random.word(),
+                source: faker.internet.userAgent(),
+                in_reply_to_vueet_id: null,
+                in_reply_to_user_id: null,
+                userId: faker.datatype.uuid(),
+                id: faker.datatype.uuid()
+            })
+            
         }
     }
     
