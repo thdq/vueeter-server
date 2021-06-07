@@ -15,10 +15,10 @@ model Vueet {
   in_reply_to_vueet_id String?
   in_reply_to_user_id  String?
   created_at           DateTime          @default(now())
-  userId               String
+  userId               String?
   UsersFavouriteds     UsersFavourited[]
   UsersRevueeteds      UserRevueeted[]
-  User                 User              @relation(fields: [userId], references: [id])
+  User                 User?              @relation(fields: [userId], references: [id])
 }
 
 // Ref idea: https://developer.twitter.com/en/docs/twitter-api/v1/data-dictionary/object-model/user
@@ -49,7 +49,7 @@ model UsersFavourited {
   id      String @id @default(uuid())
   userId  String
   vueetId String
-  Vueet Vueet @relation(fields: [vueetId], references: [id]) // try remove this
+  Vueet   Vueet  @relation(fields: [vueetId], references: [id]) // try remove this
 
   @@map(name: "user_favourited")
 }
@@ -58,7 +58,7 @@ model UserRevueeted {
   id      String @id @default(uuid())
   userId  String
   vueetId String
-  Vueet Vueet @relation(fields: [vueetId], references: [id]) // try remove this
+  Vueet   Vueet  @relation(fields: [vueetId], references: [id]) // try remove this
 
   @@map(name: "user_revueeted")
 }
